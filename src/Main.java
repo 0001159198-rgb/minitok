@@ -1,16 +1,17 @@
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Scanner;
 
 public class Main {
-git
+
     public static void main(String[] args) {
 
         Scanner sc = new Scanner(System.in);
 
-        usuarioDAO usuarioDAO = new usuarioDAO();   // Supondo que você já implementou o DAO
-        postagemDAO postagemDAO = new postagemDAO();
-        curtidaDAO curtidaDAO = new curtidaDAO();
-        directDAO directDAO = new directDAO();
+        UsuarioDAO usuarioDAO = new UsuarioDAO(connection);
+        PostagemDAO postagemDAO = new PostagemDAO(connection);
+        CurtidaDAO curtidaDAO = new CurtidaDAO(connection);
+        DirectDAO directDAO = new DirectDAO(connection);
 
         boolean continuar = true;
 
@@ -32,7 +33,7 @@ git
             System.out.print("Escolha uma opção: ");
 
             int opcao = sc.nextInt();
-            sc.nextLine(); // Consumir a quebra de linha
+            sc.nextLine();
 
             switch (opcao) {
 
@@ -50,21 +51,23 @@ git
                     System.out.print("Senha: ");
                     String senha = sc.nextLine();
 
-                    usuario usuario = new usuario();
+                    Usuario usuario = new Usuario();
                     usuario.setNome(nome);
                     usuario.setEmail(email);
                     usuario.setSenha(senha);
-                    usuario.setDataCadastro(java.time.LocalDate.now());
+                    usuario.setDataCadastro(LocalDate.now());
 
                     usuarioDAO.salvar(usuario);
                     System.out.println("Usuário criado com sucesso!");
                     break;
 
                 case 2: // Listar usuários
-                    List<usuario> usuarios = usuarioDAO.listarTodos();
+                    List<Usuario> usuarios = usuarioDAO.listarTodos();
                     System.out.println("=== LISTA DE USUÁRIOS ===");
-                    for (usuario u : usuarios) {
-                        System.out.println("ID: " + u.getId() + " | Nome: " + u.getNome() + " | Email: " + u.getEmail());
+                    for (Usuario u : usuarios) {
+                        System.out.println("ID: " + u.getId() +
+                                " | Nome: " + u.getNome() +
+                                " | Email: " + u.getEmail());
                     }
                     break;
 
@@ -72,7 +75,8 @@ git
                     System.out.print("Digite o ID do usuário: ");
                     int idAtualizar = sc.nextInt();
                     sc.nextLine();
-                    usuario uAtualizar = usuarioDAO.buscarPorId(idAtualizar);
+
+                    Usuario uAtualizar = usuarioDAO.buscarPorId(idAtualizar);
                     if (uAtualizar == null) {
                         System.out.println("Usuário não encontrado!");
                         break;
@@ -80,8 +84,10 @@ git
 
                     System.out.print("Novo nome: ");
                     String novoNome = sc.nextLine();
+
                     System.out.print("Novo email: ");
                     String novoEmail = sc.nextLine();
+
                     System.out.print("Nova senha: ");
                     String novaSenha = sc.nextLine();
 
@@ -105,6 +111,13 @@ git
                     System.out.print("ID do usuário: ");
                     int userId = sc.nextInt();
                     sc.nextLine();
+
+                    Usuario usuarioPost = usuarioDAO.buscarPorId(userId);
+                    if (usuarioPost == null) {
+                        System.out.println("Usuário não existe!");
+                        break;
+                    }
+
                     System.out.print("Conteúdo da postagem: ");
                     String conteudo = sc.nextLine();
 
@@ -113,10 +126,10 @@ git
                         break;
                     }
 
-                    postagem postagem = new postagem();
+                    Postagem postagem = new Postagem();
                     postagem.setUsuarioId(userId);
                     postagem.setConteudo(conteudo);
-                    postagem.setDataPostagem(java.time.LocalDate.now());
+                    postagem.setDataPostagem(LocalDate.now());
 
                     postagemDAO.salvar(postagem);
                     System.out.println("Postagem criada com sucesso!");
@@ -126,10 +139,13 @@ git
                     System.out.print("ID do usuário: ");
                     int userIdPost = sc.nextInt();
                     sc.nextLine();
-                    List<postagem> postagens = postagemDAO.listarPorUsuario(userIdPost);
+
+                    List<Postagem> postagens = postagemDAO.listarPorUsuario(userIdPost);
                     System.out.println("=== POSTAGENS ===");
-                    for (postagem p : postagens) {
-                        System.out.println("ID: " + p.getId() + " | Conteúdo: " + p.getConteudo() + " | Data: " + p.getDataPostagem());
+                    for (Postagem p : postagens) {
+                        System.out.println("ID: " + p.getId() +
+                                " | Conteúdo: " + p.getConteudo() +
+                                " | Data: " + p.getDataPostagem());
                     }
                     break;
 
@@ -144,6 +160,7 @@ git
                 case 8: // Curtir postagem
                     System.out.print("ID do usuário: ");
                     int idCurtidor = sc.nextInt();
+
                     System.out.print("ID da postagem: ");
                     int idPostCurtir = sc.nextInt();
                     sc.nextLine();
@@ -159,6 +176,7 @@ git
                 case 9: // Descurtir postagem
                     System.out.print("ID do usuário: ");
                     int idDescurtir = sc.nextInt();
+
                     System.out.print("ID da postagem: ");
                     int idPostDescurtir = sc.nextInt();
                     sc.nextLine();
@@ -171,6 +189,7 @@ git
                     System.out.print("ID da postagem: ");
                     int idPostQtd = sc.nextInt();
                     sc.nextLine();
+
                     int qtd = curtidaDAO.contarCurtidas(idPostQtd);
                     System.out.println("Total de curtidas: " + qtd);
                     break;
@@ -178,6 +197,7 @@ git
                 case 11: // Enviar Direct
                     System.out.print("ID do remetente: ");
                     int remetente = sc.nextInt();
+
                     System.out.print("ID do destinatário: ");
                     int destinatario = sc.nextInt();
                     sc.nextLine();
@@ -190,32 +210,35 @@ git
                     System.out.print("Mensagem: ");
                     String msg = sc.nextLine();
 
-                    direct direct = new direct();
+                    Direct direct = new Direct();
                     direct.setRemetenteId(remetente);
                     direct.setDestinatarioId(destinatario);
                     direct.setMensagem(msg);
-                    direct.setDataEnvio(java.time.LocalDate.now());
+                    direct.setDataEnvio(LocalDate.now());
 
                     directDAO.enviarMensagem(direct);
                     System.out.println("Mensagem enviada com sucesso!");
                     break;
 
-                case 12: // Listar Directs entre dois usuários
+                case 12: // Listar mensagens
                     System.out.print("ID do usuário 1: ");
                     int user1 = sc.nextInt();
                     System.out.print("ID do usuário 2: ");
                     int user2 = sc.nextInt();
                     sc.nextLine();
 
-                    List<direct> directs = directDAO.listarMensagens(user1, user2);
+                    List<Direct> directs = directDAO.listarMensagens(user1, user2);
+
                     System.out.println("=== MENSAGENS ENTRE USUÁRIOS ===");
-                    for (direct d : directs) {
-                        System.out.println("De: " + d.getRemetenteId() + " | Para: " + d.getDestinatarioId() +
-                                " | Mensagem: " + d.getMensagem() + " | Data: " + d.getDataEnvio());
+                    for (Direct d : directs) {
+                        System.out.println("De: " + d.getRemetenteId() +
+                                " | Para: " + d.getDestinatarioId() +
+                                " | Mensagem: " + d.getMensagem() +
+                                " | Data: " + d.getDataEnvio());
                     }
                     break;
 
-                case 13: // Sair
+                case 13:
                     continuar = false;
                     System.out.println("Saindo do sistema...");
                     break;

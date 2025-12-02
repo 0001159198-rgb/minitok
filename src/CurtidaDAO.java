@@ -1,4 +1,4 @@
-public interface curtidaDAO {
+public interface CurtidaDAO {
 
     void curtir(int usuarioId, int postagemId);
     void descurtir(int usuarioId, int postagemId);

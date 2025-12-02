@@ -1,18 +1,17 @@
 import java.time.LocalDate;
 
-public class postagem {
+public class Postagem {
 
     private int id;
     private int usuarioId;
     private String conteudo;
     private LocalDate dataPostagem;
 
-    // Construtor padrão
-    public postagem() {
+    public Postagem() {
         this.dataPostagem = LocalDate.now();
     }
 
-    public postagem(int id, int usuarioId, String conteudo) {
+    public Postagem(int id, int usuarioId, String conteudo) {
         this.id = id;
         this.usuarioId = usuarioId;
         this.conteudo = conteudo;
@@ -39,7 +38,6 @@ public class postagem {
         this.dataPostagem = null;
     }
 
-    // Exibir postagem
     public void exibirPostagem() {
         System.out.println("ID da Postagem: " + id);
         System.out.println("ID do Usuário: " + usuarioId);

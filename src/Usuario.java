@@ -1,6 +1,6 @@
 import java.time.LocalDate;
 
-public class usuario {
+public class Usuario {
 
     private int id;
     private String nome;
@@ -8,11 +8,11 @@ public class usuario {
     private String senha;
     private LocalDate dataCadastro;
 
-    public usuario() {
+    public Usuario() {
         this.dataCadastro = LocalDate.now();
     }
 
-    public usuario(int id, String nome, String email, String senha) {
+    public Usuario(int id, String nome, String email, String senha) {
         this.id = id;
         this.nome = nome;
         this.email = email;

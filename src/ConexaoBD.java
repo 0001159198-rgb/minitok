@@ -4,13 +4,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class conexaoBD {
+public class ConexaoBD {
 
     private static final String URL = "jdbc:mysql://localhost:3306/minitok?useSSL=false&serverTimezone=UTC";
     private static final String USER = "root";
     private static final String PASSWORD = "";
 
-    // Abrir conexão
     public static Connection getConnection() {
 
         try {

@@ -1,6 +1,6 @@
 import java.time.LocalDate;
 
-public class curtida {
+public class Curtida {
 
     private int id;
     private int remetenteId;
@@ -10,7 +10,7 @@ public class curtida {
     // Contador estático de curtidas
     private static int totalCurtidas = 0;
 
-    public curtida(int id, int remetenteId, int destinatarioId) {
+    public Curtida(int id, int remetenteId, int destinatarioId) {
         this.id = id;
         this.remetenteId = remetenteId;
         this.destinatarioId = destinatarioId;
@@ -18,7 +18,6 @@ public class curtida {
         totalCurtidas++;
     }
 
-    // Registrar nova curtida
     public void curtir(int id, int remetenteId, int destinatarioId) {
         this.id = id;
         this.remetenteId = remetenteId;
@@ -27,7 +26,6 @@ public class curtida {
         totalCurtidas++;
     }
 
-    // Remover curtida
     public void descurtir() {
         this.id = 0;
         this.remetenteId = 0;
@@ -43,9 +41,6 @@ public class curtida {
         return totalCurtidas;
     }
 
-    // -----------------------------
-    //     GETTERS E SETTERS
-    // -----------------------------
     public int getId() {
         return id;
     }

@@ -1,6 +1,6 @@
 import java.time.LocalDate;
 
-public class direct {
+public class Direct {
 
     private int id;
     private int remetenteId;
@@ -8,10 +8,9 @@ public class direct {
     private String mensagem;
     private LocalDate dataEnvio;
 
-    // Construtor vazio
-    public direct() {}
+    public Direct() {}
 
-    public direct(int id, int remetenteId, int destinatarioId, String mensagem, LocalDate dataEnvio) {
+    public Direct(int id, int remetenteId, int destinatarioId, String mensagem, LocalDate dataEnvio) {
         this.id = id;
         this.remetenteId = remetenteId;
         this.destinatarioId = destinatarioId;
